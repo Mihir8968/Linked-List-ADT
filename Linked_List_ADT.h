@@ -26,14 +26,16 @@ public:
 void LinkedList::insert(int val, int pos){
     //checking for valid pos value
     if(pos > size || pos < 0){
-        cout<<"Position on valid!"<<endl;
+        cout<<"Position invalid!"<<endl;
         return;
     }
-    Node* t;
-    t->data = val;
+    Node* t = new Node(val);
     if(pos == 0){//head needs to be modified
         t->next = head;
         head = t;
+        if(size == 0){
+            tail = head;
+        }
         ++size;
         return;
     }
@@ -44,6 +46,10 @@ void LinkedList::insert(int val, int pos){
     }
     t->next = p->next;
     p->next = t;
+    if(pos == size){
+        tail = t;
+    }
+    ++size;
 }
 
 void LinkedList::deleteByValue(int val){
