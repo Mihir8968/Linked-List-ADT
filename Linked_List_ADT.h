@@ -1,70 +1,81 @@
-#include<bits/stdc++.h>
+#ifndef LINKED_LIST_ADT_H
+#define LINKED_LIST_ADT_H
+
+#include <bits/stdc++.h>
 using namespace std;
 
-class Node{
+class Node {
 public:
     int data;
     Node* next;
 
-    //constructor
-    Node(int val){
+    // Constructor
+    Node(int val) {
         this->data = val;
         this->next = NULL;
     }
 };
-class LinkedList{
+
+class LinkedList {
 private:
     Node* head;
     Node* tail;
     int size;
 
 public:
+    LinkedList(){
+        this->head = NULL;
+        this->tail = NULL;
+        this->size = 0;
+    }
+
     void insert(int x, int pos);
     void deleteByValue(int val);
+    void display();
 };
 
-void LinkedList::insert(int val, int pos){
-    //checking for valid pos value
-    if(pos > size || pos < 0){
-        cout<<"Position invalid!"<<endl;
+void LinkedList::insert(int val, int pos) {
+    // Checking for valid pos value
+    if (pos > size || pos < 0) {
+        cout << "Position invalid!" << endl;
         return;
     }
     Node* t = new Node(val);
-    if(pos == 0){//head needs to be modified
+    if (pos == 0) { // head needs to be modified
         t->next = head;
         head = t;
-        if(size == 0){
+        if (size == 0) {
             tail = head;
         }
         ++size;
         return;
     }
-    //pos>0 && pos<=size
+    // pos > 0 && pos <= size
     Node* p = head;
-    for(int i = 0; i < pos-1; i++){
+    for (int i = 0; i < pos - 1; i++) {
         p = p->next;
     }
     t->next = p->next;
     p->next = t;
-    if(pos == size){
+    if (pos == size) {
         tail = t;
     }
     ++size;
 }
 
-void LinkedList::deleteByValue(int val){
-    if(size == 0){//No node present
-        cout<<"List is empty!"<<endl;
+void LinkedList::deleteByValue(int val) {
+    if (size == 0) { // No node present
+        cout << "List is empty!" << endl;
         return;
     }
-    Node *q = NULL;
-    Node *p = head;
-    if(head->data == val){//head needs to be updated
+    Node* q = nullptr;
+    Node* p = head;
+    if (head->data == val) { // head needs to be updated
         head = head->next;
         delete p;
         --size;
-        if(size == 0){
-            tail = NULL;
+        if (size == 0) {
+            tail = nullptr;
         }
         return;
     }
@@ -72,10 +83,12 @@ void LinkedList::deleteByValue(int val){
         q = p;
         p = p->next;
     }
+
     if (p == nullptr) {
         cout << "No such value" << endl;
         return;
     }
+
     q->next = p->next;
     if (p == tail) { // tail needs to be updated
         tail = q;
@@ -83,3 +96,14 @@ void LinkedList::deleteByValue(int val){
     delete p;
     --size;
 }
+
+void LinkedList::display() {
+    Node* p = head;
+    while (p) {
+        cout << p->data << " ";
+        p = p->next;
+    }
+    cout << endl;
+}
+
+#endif // LINKED_LIST_ADT_H
