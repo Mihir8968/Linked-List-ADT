@@ -54,35 +54,32 @@ void LinkedList::insert(int val, int pos){
 
 void LinkedList::deleteByValue(int val){
     if(size == 0){//No node present
-        cout<<"Not valid!"<<endl;
+        cout<<"List is empty!"<<endl;
         return;
     }
     Node *q = NULL;
     Node *p = head;
     if(head->data == val){//head needs to be updated
-        p = head->next;
-        q = head;
-        head = p;
-        delete q;
+        head = head->next;
+        delete p;
         --size;
+        if(size == 0){
+            tail = NULL;
+        }
         return;
     }
-    while((p->next)->next){//Traversing till second last node so that tail node case can be handles separately
-        if(p->data == val){
-            q->next = p->next;
-            delete p;
-            --size;
-            return;
-        }
+    while (p != nullptr && p->data != val) {
         q = p;
         p = p->next;
     }
-    if(tail->data == val){//tail updated
-        p->next = NULL;
-        delete tail;
-        tail = p;
-        --size;
+    if (p == nullptr) {
+        cout << "No such value" << endl;
         return;
     }
-    cout<<"No such value"<<endl;
+    q->next = p->next;
+    if (p == tail) { // tail needs to be updated
+        tail = q;
+    }
+    delete p;
+    --size;
 }
