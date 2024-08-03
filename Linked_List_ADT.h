@@ -20,6 +20,7 @@ private:
 
 public:
     void insert(int x, int pos);
+    void deleteByValue(int val);
 };
 
 void LinkedList::insert(int val, int pos){
@@ -43,4 +44,39 @@ void LinkedList::insert(int val, int pos){
     }
     t->next = p->next;
     p->next = t;
+}
+
+void LinkedList::deleteByValue(int val){
+    if(size == 0){//No node present
+        cout<<"Not valid!"<<endl;
+        return;
+    }
+    Node *q = NULL;
+    Node *p = head;
+    if(head->data == val){//head needs to be updated
+        p = head->next;
+        q = head;
+        head = p;
+        delete q;
+        --size;
+        return;
+    }
+    while((p->next)->next){//Traversing till second last node so that tail node case can be handles separately
+        if(p->data == val){
+            q->next = p->next;
+            delete p;
+            --size;
+            return;
+        }
+        q = p;
+        p = p->next;
+    }
+    if(tail->data == val){//tail updated
+        p->next = NULL;
+        delete tail;
+        tail = p;
+        --size;
+        return;
+    }
+    cout<<"No such value"<<endl;
 }
