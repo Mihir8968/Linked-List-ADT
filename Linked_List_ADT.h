@@ -32,6 +32,7 @@ public:
     void insert(int x, int pos);
     void deleteByValue(int val);
     void display();
+    void reverse();
 };
 
 void LinkedList::insert(int val, int pos) {
@@ -104,6 +105,19 @@ void LinkedList::display() {
         p = p->next;
     }
     cout << endl;
+}
+
+void LinkedList::reverse(){
+    Node* p = head;
+    Node* q = NULL;
+    Node* r = NULL;
+    while(p){
+        r = q;
+        q = p;
+        p = p->next;
+        q->next = r;
+    }
+    head = q;
 }
 
 #endif // LINKED_LIST_ADT_H
