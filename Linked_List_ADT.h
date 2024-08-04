@@ -34,6 +34,8 @@ public:
     void display();
     void reverse();
     void concatenate(LinkedList &otherLL);
+    int length();
+    Node* find(int key);
 };
 
 void LinkedList::insert(int val, int pos) {
@@ -148,6 +150,22 @@ void LinkedList::concatenate(LinkedList &otherLL)
     otherLL.head = nullptr;
     otherLL.tail = nullptr;
     otherLL.size = 0;
+}
+
+int LinkedList::length(){
+    return size;
+}
+
+Node* LinkedList::find(int key){//returns a pointer to the corresponding node
+    Node* p = head;
+    while(p){
+        if(p->data == key){
+            return p;
+        }
+        p = p->next;
+    }
+    cout<<"Value not found"<<endl;
+    return NULL;
 }
 
 #endif // LINKED_LIST_ADT_H
