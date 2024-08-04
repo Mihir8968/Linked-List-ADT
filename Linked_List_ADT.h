@@ -33,6 +33,7 @@ public:
     void deleteByValue(int val);
     void display();
     void reverse();
+    void concatenate(LinkedList &otherLL);
 };
 
 void LinkedList::insert(int val, int pos) {
@@ -118,6 +119,35 @@ void LinkedList::reverse(){
         q->next = r;
     }
     head = q;
+}
+
+void LinkedList::concatenate(LinkedList &otherLL)
+{
+    if (otherLL.head == nullptr)
+    {
+        // other linked list empty, do nothing
+        return;
+    }
+    if (head == nullptr)
+    {
+        // If this list is empty, set head and tail to the head and tail of otherLL
+        head = otherLL.head;
+        tail = otherLL.tail;
+    }
+    else
+    {
+        // Otherwise, link the tail of this list to the head of the other list
+        tail->next = otherLL.head;
+        tail = otherLL.tail;
+    }
+
+    // Update the size
+    size += otherLL.size;
+
+    // Clear the other list
+    otherLL.head = nullptr;
+    otherLL.tail = nullptr;
+    otherLL.size = 0;
 }
 
 #endif // LINKED_LIST_ADT_H
