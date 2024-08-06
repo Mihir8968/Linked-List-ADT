@@ -36,6 +36,7 @@ public:
     void concatenate(LinkedList &otherLL);
     int length();
     Node* find(int key);
+    void merge(LinkedList &otherLL);
 };
 
 void LinkedList::insert(int val, int pos) {
@@ -166,6 +167,73 @@ Node* LinkedList::find(int key){//returns a pointer to the corresponding node
     }
     cout<<"Value not found"<<endl;
     return NULL;
+}
+
+void LinkedList::merge(LinkedList &otherLL) {
+    // Makes the original linked list a merged linked list
+    Node* second = otherLL.head;
+    Node* last = nullptr;
+    Node* third = nullptr;
+
+    if (head == nullptr) {
+        // If the original list is empty, simply use the other list
+        head = otherLL.head;
+        tail = otherLL.tail;
+        size = otherLL.size;
+        otherLL.head = nullptr;
+        otherLL.tail = nullptr;
+        otherLL.size = 0;
+        return;
+    }
+
+    if (otherLL.head == nullptr) {
+        // If the other list is empty, nothing to merge
+        return;
+    }
+
+    // Initialize the merged list head
+    if (head->data <= otherLL.head->data) {
+        third = last = head;
+        head = head->next;
+    } else {
+        third = last = second;
+        second = second->next;
+    }
+
+    // Merge both lists
+    while (head != nullptr && second != nullptr) {
+        if (head->data <= second->data) {
+            last->next = head;
+            last = head;
+            head = head->next;
+        } else {
+            last->next = second;
+            last = second;
+            second = second->next;
+        }
+    }
+
+    // Attach the remaining nodes, if any
+    if (head != nullptr) {
+        last->next = head;
+    } else {
+        last->next = second;
+    }
+
+    // Update head and tail of the original list
+    head = third;
+    while (last->next != nullptr) {
+        last = last->next;
+    }
+    tail = last;
+
+    // Update the size of the merged list
+    size += otherLL.size;
+
+    // Clear the other list
+    otherLL.head = nullptr;
+    otherLL.tail = nullptr;
+    otherLL.size = 0;
 }
 
 #endif // LINKED_LIST_ADT_H
