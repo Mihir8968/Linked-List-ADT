@@ -74,23 +74,23 @@ void LinkedList::deleteByValue(int val) {
         cout << "List is empty!" << endl;
         return;
     }
-    Node* q = nullptr;
+    Node* q = NULL;
     Node* p = head;
     if (head->data == val) { // head needs to be updated
         head = head->next;
         delete p;
         --size;
         if (size == 0) {
-            tail = nullptr;
+            tail = NULL;
         }
         return;
     }
-    while (p != nullptr && p->data != val) {
+    while (p != NULL && p->data != val) {
         q = p;
         p = p->next;
     }
 
-    if (p == nullptr) {
+    if (p == NULL) {
         cout << "No such value" << endl;
         return;
     }
@@ -127,12 +127,12 @@ void LinkedList::reverse(){
 
 void LinkedList::concatenate(LinkedList &otherLL)
 {
-    if (otherLL.head == nullptr)
+    if (otherLL.head == NULL)
     {
         // other linked list empty, do nothing
         return;
     }
-    if (head == nullptr)
+    if (head == NULL)
     {
         // If this list is empty, set head and tail to the head and tail of otherLL
         head = otherLL.head;
@@ -149,8 +149,8 @@ void LinkedList::concatenate(LinkedList &otherLL)
     size += otherLL.size;
 
     // Clear the other list
-    otherLL.head = nullptr;
-    otherLL.tail = nullptr;
+    otherLL.head = NULL;
+    otherLL.tail = NULL;
     otherLL.size = 0;
 }
 
@@ -173,21 +173,21 @@ Node* LinkedList::find(int key){//returns a pointer to the corresponding node
 void LinkedList::merge(LinkedList &otherLL) {
     // Makes the original linked list a merged linked list
     Node* second = otherLL.head;
-    Node* last = nullptr;
-    Node* third = nullptr;
+    Node* last = NULL;
+    Node* third = NULL;
 
-    if (head == nullptr) {
+    if (head == NULL) {
         // If the original list is empty, simply use the other list
         head = otherLL.head;
         tail = otherLL.tail;
         size = otherLL.size;
-        otherLL.head = nullptr;
-        otherLL.tail = nullptr;
+        otherLL.head = NULL;
+        otherLL.tail = NULL;
         otherLL.size = 0;
         return;
     }
 
-    if (otherLL.head == nullptr) {
+    if (otherLL.head == NULL) {
         // If the other list is empty, nothing to merge
         return;
     }
@@ -202,7 +202,7 @@ void LinkedList::merge(LinkedList &otherLL) {
     }
 
     // Merge both lists
-    while (head != nullptr && second != nullptr) {
+    while (head != NULL && second != NULL) {
         if (head->data <= second->data) {
             last->next = head;
             last = head;
@@ -215,7 +215,7 @@ void LinkedList::merge(LinkedList &otherLL) {
     }
 
     // Attach the remaining nodes, if any
-    if (head != nullptr) {
+    if (head != NULL) {
         last->next = head;
     } else {
         last->next = second;
@@ -223,7 +223,7 @@ void LinkedList::merge(LinkedList &otherLL) {
 
     // Update head and tail of the original list
     head = third;
-    while (last->next != nullptr) {
+    while (last->next != NULL) {
         last = last->next;
     }
     tail = last;
@@ -232,8 +232,8 @@ void LinkedList::merge(LinkedList &otherLL) {
     size += otherLL.size;
 
     // Clear the other list
-    otherLL.head = nullptr;
-    otherLL.tail = nullptr;
+    otherLL.head = NULL;
+    otherLL.tail = NULL;
     otherLL.size = 0;
 }
 
