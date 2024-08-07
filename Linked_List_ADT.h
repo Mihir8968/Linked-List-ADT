@@ -37,6 +37,7 @@ public:
     int length();
     Node* find(int key);
     void merge(LinkedList &otherLL);
+    bool isLoop();
 };
 
 void LinkedList::insert(int val, int pos) {
@@ -234,6 +235,17 @@ void LinkedList::merge(LinkedList &otherLL) {
     otherLL.head = nullptr;
     otherLL.tail = nullptr;
     otherLL.size = 0;
+}
+
+bool LinkedList::isLoop(){
+    Node *p, *q;
+    p = q = head;
+    do{
+        p = p->next;
+        q = q->next;
+        q = q != NULL ? q->next : NULL;
+    }while(p && q && p != q);
+    return p == q ? true : false;
 }
 
 #endif // LINKED_LIST_ADT_H
