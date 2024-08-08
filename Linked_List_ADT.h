@@ -38,6 +38,7 @@ public:
     Node* find(int key);
     void merge(LinkedList &otherLL);
     bool isLoop();
+    void createLoopByValue(int val);
 };
 
 void LinkedList::insert(int val, int pos) {
@@ -246,6 +247,19 @@ bool LinkedList::isLoop(){
         q = q != NULL ? q->next : NULL;
     }while(p && q && p != q);
     return p == q ? true : false;
+}
+
+void LinkedList::createLoopByValue(int val){
+    if(size == 0){
+        cout<<"Empty Linked List"<<endl;
+        return;
+    }
+    Node* p = find(val);
+    if(!p){
+        return;
+    }
+    tail->next = p;
+    delete p;
 }
 
 #endif // LINKED_LIST_ADT_H
