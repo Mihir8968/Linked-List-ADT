@@ -4,26 +4,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Node {
+class Node
+{
 public:
     int data;
-    Node* next;
+    Node *next;
 
     // Constructor
-    Node(int val) {
+    Node(int val)
+    {
         this->data = val;
         this->next = NULL;
     }
 };
 
-class LinkedList {
+class LinkedList
+{
 private:
-    Node* head;
-    Node* tail;
+    Node *head;
+    Node *tail;
     int size;
 
 public:
-    LinkedList(){
+    LinkedList()
+    {
         this->head = NULL;
         this->tail = NULL;
         this->size = 0;
@@ -35,89 +39,106 @@ public:
     void reverse();
     void concatenate(LinkedList &otherLL);
     int length();
-    Node* find(int key);
+    Node *find(int key);
     void merge(LinkedList &otherLL);
     bool isLoop();
     void createLoopByValue(int val);
 };
 
-void LinkedList::insert(int val, int pos) {
+void LinkedList::insert(int val, int pos)
+{
     // Checking for valid pos value
-    if (pos > size || pos < 0) {
+    if (pos > size || pos < 0)
+    {
         cout << "Position invalid!" << endl;
         return;
     }
-    Node* t = new Node(val);
-    if (pos == 0) { // head needs to be modified
+    Node *t = new Node(val);
+    if (pos == 0)
+    { // head needs to be modified
         t->next = head;
         head = t;
-        if (size == 0) {
+        if (size == 0)
+        {
             tail = head;
         }
         ++size;
         return;
     }
     // pos > 0 && pos <= size
-    Node* p = head;
-    for (int i = 0; i < pos - 1; i++) {
+    Node *p = head;
+    for (int i = 0; i < pos - 1; i++)
+    {
         p = p->next;
     }
     t->next = p->next;
     p->next = t;
-    if (pos == size) {
+    if (pos == size)
+    {
         tail = t;
     }
     ++size;
 }
 
-void LinkedList::deleteByValue(int val) {
-    if (size == 0) { // No node present
+void LinkedList::deleteByValue(int val)
+{
+    if (size == 0)
+    { // No node present
         cout << "List is empty!" << endl;
         return;
     }
-    Node* q = NULL;
-    Node* p = head;
-    if (head->data == val) { // head needs to be updated
+    Node *q = nullptr;
+    Node *p = head;
+    if (head->data == val)
+    { // head needs to be updated
         head = head->next;
         delete p;
         --size;
-        if (size == 0) {
-            tail = NULL;
+        if (size == 0)
+        {
+            tail = nullptr;
         }
         return;
     }
-    while (p != NULL && p->data != val) {
+    while (p != nullptr && p->data != val)
+    {
         q = p;
         p = p->next;
     }
 
-    if (p == NULL) {
+    if (p == nullptr)
+    {
         cout << "No such value" << endl;
         return;
     }
 
     q->next = p->next;
-    if (p == tail) { // tail needs to be updated
+    if (p == tail)
+    { // tail needs to be updated
         tail = q;
     }
     delete p;
     --size;
 }
 
-void LinkedList::display() {
-    Node* p = head;
-    while (p) {
+void LinkedList::display()
+{
+    Node *p = head;
+    while (p)
+    {
         cout << p->data << " ";
         p = p->next;
     }
     cout << endl;
 }
 
-void LinkedList::reverse(){
-    Node* p = head;
-    Node* q = NULL;
-    Node* r = NULL;
-    while(p){
+void LinkedList::reverse()
+{
+    Node *p = head;
+    Node *q = NULL;
+    Node *r = NULL;
+    while (p)
+    {
         r = q;
         q = p;
         p = p->next;
@@ -128,12 +149,12 @@ void LinkedList::reverse(){
 
 void LinkedList::concatenate(LinkedList &otherLL)
 {
-    if (otherLL.head == NULL)
+    if (otherLL.head == nullptr)
     {
         // other linked list empty, do nothing
         return;
     }
-    if (head == NULL)
+    if (head == nullptr)
     {
         // If this list is empty, set head and tail to the head and tail of otherLL
         head = otherLL.head;
@@ -150,65 +171,79 @@ void LinkedList::concatenate(LinkedList &otherLL)
     size += otherLL.size;
 
     // Clear the other list
-    otherLL.head = NULL;
-    otherLL.tail = NULL;
+    otherLL.head = nullptr;
+    otherLL.tail = nullptr;
     otherLL.size = 0;
 }
 
-int LinkedList::length(){
+int LinkedList::length()
+{
     return size;
 }
 
-Node* LinkedList::find(int key){//returns a pointer to the corresponding node
-    Node* p = head;
-    while(p){
-        if(p->data == key){
+Node *LinkedList::find(int key)
+{
+    Node *p = head;
+    while (p)
+    {
+        if (p->data == key)
+        {
             return p;
         }
         p = p->next;
     }
-    cout<<"Value not found"<<endl;
+    cout << "Value not found" << endl;
     return NULL;
 }
 
-void LinkedList::merge(LinkedList &otherLL) {
+void LinkedList::merge(LinkedList &otherLL)
+{
     // Makes the original linked list a merged linked list
-    Node* second = otherLL.head;
-    Node* last = NULL;
-    Node* third = NULL;
+    Node *second = otherLL.head;
+    Node *last = nullptr;
+    Node *third = nullptr;
 
-    if (head == NULL) {
+    if (head == nullptr)
+    {
         // If the original list is empty, simply use the other list
         head = otherLL.head;
         tail = otherLL.tail;
         size = otherLL.size;
-        otherLL.head = NULL;
-        otherLL.tail = NULL;
+        otherLL.head = nullptr;
+        otherLL.tail = nullptr;
         otherLL.size = 0;
         return;
     }
 
-    if (otherLL.head == NULL) {
+    if (otherLL.head == nullptr)
+    {
         // If the other list is empty, nothing to merge
         return;
     }
 
     // Initialize the merged list head
-    if (head->data <= otherLL.head->data) {
+    if (head->data <= otherLL.head->data)
+    {
         third = last = head;
         head = head->next;
-    } else {
+    }
+    else
+    {
         third = last = second;
         second = second->next;
     }
 
     // Merge both lists
-    while (head != NULL && second != NULL) {
-        if (head->data <= second->data) {
+    while (head != nullptr && second != nullptr)
+    {
+        if (head->data <= second->data)
+        {
             last->next = head;
             last = head;
             head = head->next;
-        } else {
+        }
+        else
+        {
             last->next = second;
             last = second;
             second = second->next;
@@ -216,15 +251,19 @@ void LinkedList::merge(LinkedList &otherLL) {
     }
 
     // Attach the remaining nodes, if any
-    if (head != NULL) {
+    if (head != nullptr)
+    {
         last->next = head;
-    } else {
+    }
+    else
+    {
         last->next = second;
     }
 
     // Update head and tail of the original list
     head = third;
-    while (last->next != NULL) {
+    while (last->next != nullptr)
+    {
         last = last->next;
     }
     tail = last;
@@ -233,29 +272,34 @@ void LinkedList::merge(LinkedList &otherLL) {
     size += otherLL.size;
 
     // Clear the other list
-    otherLL.head = NULL;
-    otherLL.tail = NULL;
+    otherLL.head = nullptr;
+    otherLL.tail = nullptr;
     otherLL.size = 0;
 }
 
-bool LinkedList::isLoop(){
+bool LinkedList::isLoop()
+{
     Node *p, *q;
     p = q = head;
-    do{
+    do
+    {
         p = p->next;
         q = q->next;
         q = q != NULL ? q->next : NULL;
-    }while(p && q && p != q);
+    } while (p && q && p != q);
     return p == q ? true : false;
 }
 
-void LinkedList::createLoopByValue(int val){
-    if(size == 0){
-        cout<<"Empty Linked List"<<endl;
+void LinkedList::createLoopByValue(int val)
+{
+    if (size == 0)
+    {
+        cout << "Empty Linked List" << endl;
         return;
     }
-    Node* p = find(val);
-    if(!p){
+    Node *p = find(val);
+    if (!p)
+    {
         return;
     }
     tail->next = p;
