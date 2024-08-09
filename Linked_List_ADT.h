@@ -1,9 +1,6 @@
 #ifndef LINKED_LIST_ADT_H
 #define LINKED_LIST_ADT_H
 
-#include <iostream>
-using namespace std;
-
 template <typename T>
 class Node
 {
