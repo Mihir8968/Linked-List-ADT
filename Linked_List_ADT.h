@@ -1,6 +1,9 @@
 #ifndef LINKED_LIST_ADT_H
 #define LINKED_LIST_ADT_H
 
+// #include <iostream>
+// using namespace std;
+
 template <typename T>
 class Node
 {
@@ -42,7 +45,7 @@ public:
     void merge(LinkedList &otherLL);
     bool isLoop();
     void createLoopByValue(T val);
-    LinkedList<T>::~LinkedList();
+    ~LinkedList();
 };
 
 template <typename T>
@@ -316,16 +319,17 @@ void LinkedList<T>::createLoopByValue(T val)
     delete p;
 }
 
+template <typename T>
 LinkedList<T>::~LinkedList()
 {
     Node<T> *current = head;
-    while (current != nullptr)
+    while (current != NULL)
     {
-        Node<T> *next = current->next;
-        delete current;
-        current = next;                
+        Node<T> *next = current->next; // Save the next node
+        delete current;                // Delete the current node
+        current = next;                // Move to the next node
     }
-    head = nullptr; // Ensure head is null after deletion
+    head = NULL; // Ensure head is null after deletion
 }
 
 #endif // LINKED_LIST_ADT_H
