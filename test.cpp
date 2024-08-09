@@ -2,8 +2,6 @@
 using namespace std;
 #include "Linked_List_ADT.h"
 
-using namespace std;
-
 int main()
 {
     LinkedList<int> list;
