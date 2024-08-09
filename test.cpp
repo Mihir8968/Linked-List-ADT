@@ -1,11 +1,10 @@
-
 ### test.cpp
 
 ```cpp
 #include "Linked_List_ADT.h"
 
 int main() {
-    LinkedList list;
+    LinkedList<int> list;
 
     // Test insertion
     list.insert(1, 0);
