@@ -1,28 +1,30 @@
 #ifndef LINKED_LIST_ADT_H
 #define LINKED_LIST_ADT_H
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
+template <typename T>
 class Node
 {
 public:
-    int data;
+    T data;
     Node *next;
 
     // Constructor
-    Node(int val)
+    Node(T val)
     {
         this->data = val;
         this->next = NULL;
     }
 };
 
+template <typename T>
 class LinkedList
 {
 private:
-    Node *head;
-    Node *tail;
+    Node<T> *head;
+    Node<T> *tail;
     int size;
 
 public:
@@ -33,19 +35,20 @@ public:
         this->size = 0;
     }
 
-    void insert(int x, int pos);
-    void deleteByValue(int val);
+    void insert(T x, int pos);
+    void deleteByValue(T val);
     void display();
     void reverse();
     void concatenate(LinkedList &otherLL);
     int length();
-    Node *find(int key);
+    Node<T> *find(T key);
     void merge(LinkedList &otherLL);
     bool isLoop();
-    void createLoopByValue(int val);
+    void createLoopByValue(T val);
 };
 
-void LinkedList::insert(int val, int pos)
+template <typename T>
+void LinkedList<T>::insert(T val, int pos)
 {
     // Checking for valid pos value
     if (pos > size || pos < 0)
@@ -53,7 +56,7 @@ void LinkedList::insert(int val, int pos)
         cout << "Position invalid!" << endl;
         return;
     }
-    Node *t = new Node(val);
+    Node<T> *t = new Node<T>(val);
     if (pos == 0)
     { // head needs to be modified
         t->next = head;
@@ -66,7 +69,7 @@ void LinkedList::insert(int val, int pos)
         return;
     }
     // pos > 0 && pos <= size
-    Node *p = head;
+    Node<T> *p = head;
     for (int i = 0; i < pos - 1; i++)
     {
         p = p->next;
@@ -80,15 +83,16 @@ void LinkedList::insert(int val, int pos)
     ++size;
 }
 
-void LinkedList::deleteByValue(int val)
+template <typename T>
+void LinkedList<T>::deleteByValue(T val)
 {
     if (size == 0)
     { // No node present
         cout << "List is empty!" << endl;
         return;
     }
-    Node *q = nullptr;
-    Node *p = head;
+    Node<T> *q = NULL;
+    Node<T> *p = head;
     if (head->data == val)
     { // head needs to be updated
         head = head->next;
@@ -96,17 +100,17 @@ void LinkedList::deleteByValue(int val)
         --size;
         if (size == 0)
         {
-            tail = nullptr;
+            tail = NULL;
         }
         return;
     }
-    while (p != nullptr && p->data != val)
+    while (p != NULL && p->data != val)
     {
         q = p;
         p = p->next;
     }
 
-    if (p == nullptr)
+    if (p == NULL)
     {
         cout << "No such value" << endl;
         return;
@@ -121,9 +125,10 @@ void LinkedList::deleteByValue(int val)
     --size;
 }
 
-void LinkedList::display()
+template <typename T>
+void LinkedList<T>::display()
 {
-    Node *p = head;
+    Node<T> *p = head;
     while (p)
     {
         cout << p->data << " ";
@@ -132,11 +137,12 @@ void LinkedList::display()
     cout << endl;
 }
 
-void LinkedList::reverse()
+template <typename T>
+void LinkedList<T>::reverse()
 {
-    Node *p = head;
-    Node *q = NULL;
-    Node *r = NULL;
+    Node<T> *p = head;
+    Node<T> *q = NULL;
+    Node<T> *r = NULL;
     while (p)
     {
         r = q;
@@ -147,14 +153,15 @@ void LinkedList::reverse()
     head = q;
 }
 
-void LinkedList::concatenate(LinkedList &otherLL)
+template <typename T>
+void LinkedList<T>::concatenate(LinkedList<T> &otherLL)
 {
-    if (otherLL.head == nullptr)
+    if (otherLL.head == NULL)
     {
         // other linked list empty, do nothing
         return;
     }
-    if (head == nullptr)
+    if (head == NULL)
     {
         // If this list is empty, set head and tail to the head and tail of otherLL
         head = otherLL.head;
@@ -171,19 +178,21 @@ void LinkedList::concatenate(LinkedList &otherLL)
     size += otherLL.size;
 
     // Clear the other list
-    otherLL.head = nullptr;
-    otherLL.tail = nullptr;
+    otherLL.head = NULL;
+    otherLL.tail = NULL;
     otherLL.size = 0;
 }
 
-int LinkedList::length()
+template <typename T>
+int LinkedList<T>::length()
 {
     return size;
 }
 
-Node *LinkedList::find(int key)
+template <typename T>
+Node<T> *LinkedList<T>::find(T key)
 {
-    Node *p = head;
+    Node<T> *p = head;
     while (p)
     {
         if (p->data == key)
@@ -196,26 +205,27 @@ Node *LinkedList::find(int key)
     return NULL;
 }
 
-void LinkedList::merge(LinkedList &otherLL)
+template <typename T>
+void LinkedList<T>::merge(LinkedList<T> &otherLL)
 {
     // Makes the original linked list a merged linked list
-    Node *second = otherLL.head;
-    Node *last = nullptr;
-    Node *third = nullptr;
+    Node<T> *second = otherLL.head;
+    Node<T> *last = NULL;
+    Node<T> *third = NULL;
 
-    if (head == nullptr)
+    if (head == NULL)
     {
         // If the original list is empty, simply use the other list
         head = otherLL.head;
         tail = otherLL.tail;
         size = otherLL.size;
-        otherLL.head = nullptr;
-        otherLL.tail = nullptr;
+        otherLL.head = NULL;
+        otherLL.tail = NULL;
         otherLL.size = 0;
         return;
     }
 
-    if (otherLL.head == nullptr)
+    if (otherLL.head == NULL)
     {
         // If the other list is empty, nothing to merge
         return;
@@ -234,7 +244,7 @@ void LinkedList::merge(LinkedList &otherLL)
     }
 
     // Merge both lists
-    while (head != nullptr && second != nullptr)
+    while (head != NULL && second != NULL)
     {
         if (head->data <= second->data)
         {
@@ -251,7 +261,7 @@ void LinkedList::merge(LinkedList &otherLL)
     }
 
     // Attach the remaining nodes, if any
-    if (head != nullptr)
+    if (head != NULL)
     {
         last->next = head;
     }
@@ -262,7 +272,7 @@ void LinkedList::merge(LinkedList &otherLL)
 
     // Update head and tail of the original list
     head = third;
-    while (last->next != nullptr)
+    while (last->next != NULL)
     {
         last = last->next;
     }
@@ -272,32 +282,34 @@ void LinkedList::merge(LinkedList &otherLL)
     size += otherLL.size;
 
     // Clear the other list
-    otherLL.head = nullptr;
-    otherLL.tail = nullptr;
+    otherLL.head = NULL;
+    otherLL.tail = NULL;
     otherLL.size = 0;
 }
 
-bool LinkedList::isLoop()
+template <typename T>
+bool LinkedList<T>::isLoop()
 {
-    Node *p, *q;
+    Node<T> *p, *q;
     p = q = head;
     do
     {
         p = p->next;
-        q = q->next;
+        q = q != NULL ? q->next : NULL;
         q = q != NULL ? q->next : NULL;
     } while (p && q && p != q);
-    return p == q ? true : false;
+    return p == q;
 }
 
-void LinkedList::createLoopByValue(int val)
+template <typename T>
+void LinkedList<T>::createLoopByValue(T val)
 {
     if (size == 0)
     {
         cout << "Empty Linked List" << endl;
         return;
     }
-    Node *p = find(val);
+    Node<T> *p = find(val);
     if (!p)
     {
         return;
